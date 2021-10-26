@@ -86,7 +86,7 @@ class DuplicateByteRange(Mutation):
         res = input[:]
         src = self._rand(len(res))
         dst = self._rand(len(res))
-        while src == dst:
+        while (src == dst) & (len(input)>1):
             dst = self._rand(len(res))
         n = self._choose_len(len(res) - src)
         tmp = bytearray(n)
@@ -109,7 +109,7 @@ class CopyBytes(Mutation):
         res = input[:]
         src = self._rand(len(res))
         dst = self._rand(len(res))
-        while src == dst:
+        while (src == dst) & (len(input)>1):
             dst = self._rand(len(res))
         n = self._choose_len(len(res) - src)
         self.copy(res, res, src, dst, src+n)
