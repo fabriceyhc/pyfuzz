@@ -40,9 +40,10 @@ class FunctionRunner(Runner):
             outcome = self.PASS
         except Exception as err:
             self.exception.append(type(err).__name__)
-            template = "Oops, the number {2} exception of type {0} occurred. Arguments:\n{1!r}"
+            template = "Oops, the number {2} exception(s) of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(err).__name__, err.args, self.exception.count(type(err).__name__))
             print(message)
+            print("Error on line {}".format(sys.exc_info()[-1].tb_lineno))
             result = None
             outcome = self.FAIL
 
