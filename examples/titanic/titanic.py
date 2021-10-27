@@ -18,8 +18,8 @@ from sklearn.model_selection import cross_val_score
 
 def load_data():
     script_dir = os.path.dirname(__file__)
-    train = pd.read_csv(os.path.join(script_dir, 'titanic/data/train.csv'))
-    test  = pd.read_csv(os.path.join(script_dir, 'titanic/data/test.csv'))
+    train = pd.read_csv(os.path.join(script_dir, 'data/train.csv'))
+    test  = pd.read_csv(os.path.join(script_dir, 'data/test.csv'))
 
     train_test_data = [train, test]  # combining train and test dataset
 
