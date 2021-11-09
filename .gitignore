@@ -130,3 +130,4 @@ dmypy.json
 
 # Mac environ
 .idea/
+*.DS_Store

@@ -111,10 +111,10 @@ if __name__ == '__main__':
         print(random_fuzzer.fuzz())
 
     print("== MutationLineCoverageFuzzer " + "=" * 50)
-    from test_programs import cgi_decode
-    from string_mutations import mutate_strings
-    from byte_mutations import mutate_bytes
-    from runners import *
+    from pyfuzz.test_programs import cgi_decode
+    from pyfuzz.string_mutations import mutate_strings
+    from pyfuzz.byte_mutations import mutate_bytes
+    from pyfuzz.runners import *
 
     seed = ["Hello World"]
     cgi_runner = FunctionLineCoverageRunner(cgi_decode)

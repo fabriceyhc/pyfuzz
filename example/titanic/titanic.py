@@ -12,6 +12,7 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
 # from sklearn.neighbors import KNeighborsClassifier
+
 from sklearn.svm import SVC
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
@@ -127,7 +128,7 @@ def predict(input):
 
 # https://stackoverflow.com/questions/45504241/create-single-row-python-pandas-dataframe
 def build_test_input(pclass, sex, age, fare, cabin, embarked, title, family_size):
-    test_input = pd.DataFrame(columns = ['Pclass', 'Sex', 'Age', 'Fare', 'Cabin', 'Embarked', 'Title', 'FamilySize'])
+    test_input = pd.DataFrame(columns=['Pclass', 'Sex', 'Age', 'Fare', 'Cabin', 'Embarked', 'Title', 'FamilySize'])
     test_input.loc[0] = [pclass, sex, age, fare, cabin, embarked, title, family_size]
     return test_input
 

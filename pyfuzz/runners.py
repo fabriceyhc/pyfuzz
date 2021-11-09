@@ -43,7 +43,11 @@ class FunctionRunner(Runner):
             template = "Oops, the number {2} exception(s) of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(err).__name__, err.args, self.exception.count(type(err).__name__))
             print(message)
-            print("Error on line {}".format(sys.exc_info()[-1].tb_lineno))
+
+            tb = err.__traceback__.tb_next.tb_next.tb_next
+            print("Error on line {}".format(tb.tb_lineno))
+            print("Error with {}".format(tb.tb_frame.f_code.co_name))
+
             result = None
             outcome = self.FAIL
 
