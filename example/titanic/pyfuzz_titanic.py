@@ -1,5 +1,5 @@
 import pandas as pd
-import titanic
+import example.titanic.titanic as titanic
 
 # TODO - These imports will break, we need to work on importing pyfuzz properly. 
 

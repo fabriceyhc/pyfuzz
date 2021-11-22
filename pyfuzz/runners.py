@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 
 from pyfuzz.coverage import *
 
@@ -28,6 +29,7 @@ class FunctionRunner(Runner):
     def __init__(self, function):
         """Initialize.  `function` is a function to be executed"""
         self.function = function
+        self.exception = []
 
     def run_function(self, inp):
         return self.function(inp)
@@ -36,7 +38,16 @@ class FunctionRunner(Runner):
         try:
             result = self.run_function(inp)
             outcome = self.PASS
-        except Exception:
+        except Exception as err:
+            self.exception.append(type(err).__name__)
+            template = "Oops, the number {2} exception(s) of type {0} occurred. Arguments:\n{1!r}"
+            message = template.format(type(err).__name__, err.args, self.exception.count(type(err).__name__))
+            print(message)
+
+            tb = err.__traceback__.tb_next.tb_next.tb_next
+            print("Error on line {}".format(tb.tb_lineno))
+            print("Error with {}".format(tb.tb_frame.f_code.co_name))
+
             result = None
             outcome = self.FAIL
 
