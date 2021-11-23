@@ -131,3 +131,4 @@ dmypy.json
 # Mac environ
 .idea/
 *.DS_Store
+scratch_pad.ipynb

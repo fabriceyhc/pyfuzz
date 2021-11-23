@@ -3,7 +3,14 @@
 # @Time    : 11/9/21 3:41 PM
 # @Author  : Jiyuan Wang
 # @File    : pyfuzz_loss_user.py
-import example.lossuser.loss_user as lo
+
+
+import sys
+import os
+
+sys.path.insert(1, os.path.abspath("."))
+
+import loss_user as lo
 import pandas as pd
 
 from pyfuzz.fuzzers import *

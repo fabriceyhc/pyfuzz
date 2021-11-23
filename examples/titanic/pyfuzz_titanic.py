@@ -1,5 +1,11 @@
+import sys
+import os
+
+sys.path.insert(1, os.path.abspath("."))
+
+
 import pandas as pd
-import example.titanic.titanic as titanic
+import titanic
 
 # TODO - These imports will break, we need to work on importing pyfuzz properly. 
 

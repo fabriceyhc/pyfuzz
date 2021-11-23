@@ -3,13 +3,19 @@
 # @Time    : 11/9/21 8:10 PM
 # @Author  : Jiyuan Wang
 # @File    : pyfuzz_minist.py
-import pandas as pd
-import example.mnist.mnist as mnist
+
+import sys
+import os
+
+sys.path.insert(1, os.path.abspath("."))
+
+import mnist as mnist
 
 from pyfuzz.fuzzers import *
 from pyfuzz.byte_mutations import *
 from pyfuzz.fuzz_data_interpreter import *
 import numpy as np
+import pandas as pd
 
 
 def PyFuzzMnist(data):
@@ -30,7 +36,7 @@ if __name__ == "__main__":
 
     runner = FunctionRunner(PyFuzzMnist)
 
-    seed = [bytearray([0] * 784*4)]
+    seed = [bytearray([0] * 784 * 4)]
     fuzzer = MutationFuzzer(seed, mutator=mutate_bytes)
     results = fuzzer.runs(runner, 100)
 
