@@ -41,9 +41,13 @@ def setup():
 
 def predict(inputs):
     outputs = model(inputs)
-    
-    if torch.isnan(outputs).any():
-        raise ValueError("outputs contained nan!")
+
+
+    # apparently pytorch doesn't throw errors when the input to F.softmax or torch.argmax contains nans
+    # the argmax has some default logic in it where it returns 0 when all values are the same (i.e. all nans) 
+    # I don't think its fair to force an error here, but this is a sneaky issue...
+    # if torch.isnan(outputs).any():
+    #     raise ValueError("outputs contained nan!")
     
     class_probs = F.softmax(outputs, dim=1)
     class_preds = torch.argmax(class_probs, dim=1)
