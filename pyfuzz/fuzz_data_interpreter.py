@@ -49,3 +49,12 @@ class FuzzedDataInterpreter(object):
         out = struct.unpack(struct_format, out_bytes)[0]
         self.bytes_idx += num_bytes
         return out
+
+    def claim_probability(self):
+        num_bytes = 4 
+        if self.bytes_remaining() < num_bytes:
+            return 0.0
+        int_val = self.claim_int(num_bytes=4) # unsigned
+        max_val = 2 ** 32 # max unsigned int
+        return int_val / max_val
+
