@@ -26,7 +26,7 @@ def setup():
 
     # model + optimizer
     model = nn.Linear(4, 3)
-    optimizer = torch.optim.Adam(model.parameters(), lr=1)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
     # train
     for epoch in range(3001):
@@ -51,7 +51,7 @@ def predict(inputs):
     
     class_probs = F.softmax(outputs, dim=1)
     class_preds = torch.argmax(class_probs, dim=1)
-    return class_probs
+    return class_preds
 
 if __name__ == '__main__':
     model = setup()

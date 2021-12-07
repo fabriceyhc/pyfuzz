@@ -3,11 +3,8 @@ import os
 
 sys.path.insert(1, os.path.abspath("."))
 
-
 import pandas as pd
 import titanic
-
-# TODO - These imports will break, we need to work on importing pyfuzz properly. 
 
 from pyfuzz.fuzzers import *
 from pyfuzz.byte_mutations import *
