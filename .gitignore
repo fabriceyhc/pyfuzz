@@ -131,4 +131,10 @@ dmypy.json
 # Mac environ
 .idea/
 *.DS_Store
+
+# misc
 scratch_pad.ipynb
+**/data/
+
+# pytorch lightning
+**/lightning_logs/
