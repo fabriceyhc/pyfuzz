@@ -29,7 +29,7 @@ class FunctionRunner(Runner):
     def __init__(self, function):
         """Initialize.  `function` is a function to be executed"""
         self.function = function
-        self.exception = []
+        self.exceptions = []
 
     def run_function(self, inp):
         return self.function(inp)
@@ -39,9 +39,9 @@ class FunctionRunner(Runner):
             result = self.run_function(inp)
             outcome = self.PASS
         except Exception as err:
-            self.exception.append(type(err).__name__)
+            self.exceptions.append(type(err).__name__)
             template = "Oops, the number {2} exception(s) of type {0} occurred. Arguments:\n{1!r}"
-            message = template.format(type(err).__name__, err.args, self.exception.count(type(err).__name__))
+            message = template.format(type(err).__name__, err.args, self.exceptions.count(type(err).__name__))
             print(message)
 
             tb = err.__traceback__.tb_next.tb_next.tb_next
