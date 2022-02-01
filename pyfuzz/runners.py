@@ -39,7 +39,15 @@ class FunctionRunner(Runner):
             result = self.run_function(inp)
             outcome = self.PASS
         except Exception as err:
-            self.exceptions.append(type(err).__name__)
+            if err.args:
+                try:
+                    multiple_exceptions = [type(e).__name__ for e in err.args[0][0]]
+                    self.exceptions.extend(multiple_exceptions)
+                except:
+                    pass
+            else:
+                self.exceptions.append(type(err).__name__)
+            
             template = "Oops, the number {2} exception(s) of type {0} occurred. Arguments:\n{1!r}"
             message = template.format(type(err).__name__, err.args, self.exceptions.count(type(err).__name__))
             print(message)
@@ -58,9 +66,9 @@ class FunctionLineCoverageRunner(FunctionRunner):
         with Coverage() as cov:
             try:
                 result = super().run_function(inp)
-            except Exception as exc:
+            except Exception as err:
                 self._coverage = cov.coverage()
-                raise exc
+                raise err
         self._coverage = cov.coverage()
         return result
 
@@ -72,9 +80,9 @@ class FunctionBranchCoverageRunner(FunctionRunner):
         with BranchCoverage() as cov:
             try:
                 result = super().run_function(inp)
-            except Exception as exc:
+            except Exception as err:
                 self._coverage = cov.coverage()
-                raise exc
+                raise err
         self._coverage = cov.coverage()
         return result
 

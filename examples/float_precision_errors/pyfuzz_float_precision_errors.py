@@ -44,3 +44,5 @@ if __name__ == "__main__":
 
     exceptions, counts = np.unique(runner.exceptions, return_counts=True)
     print(pd.DataFrame([counts], columns=exceptions))
+
+    # print(runner.exceptions)

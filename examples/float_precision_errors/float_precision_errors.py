@@ -1,11 +1,17 @@
 import mpmath as mp
 import cmath
 
-class NaiveError(Exception):
-    """Naive precision error"""
+class NaiveVSPreciseError(Exception):
+    """Difference between Naive implementatino and Precise implementation exceeded threhold"""
+    pass
 
-class HerbieError(Exception):
-    """Herbie precision error"""
+class HerbieVSPreciseError(Exception):
+    """Difference between Herbie implementatino and Precise implementation exceeded threhold"""
+    pass
+
+class NaiveVSHerbieError(Exception):
+    """Difference between Naive implementatino and Herbie implementation exceeded threhold"""
+    pass
 
 # quadratic formulas
 def solve_quadratic_naive(a, b, c):
@@ -72,14 +78,35 @@ def quadratic_comparison(a, b, c, ERROR_THRESHOLD=0.0):
 
     # print(x_naive, x_herbie, x_precise)
 
-    x_naive_error  = measure_error(x_naive,  x_precise)
-    x_herbie_error = measure_error(x_herbie, x_precise)
+    x_naive_vs_precise_error  = measure_error(x_naive,  x_precise)
+    x_herbie_vs_precise_error = measure_error(x_herbie, x_precise)
+    x_naive_vs_herbie_error   = measure_error(x_naive,  x_herbie)
 
     # print(x_naive_error, x_herbie_error)
 
-    if x_naive_error > ERROR_THRESHOLD:
-        print("Naive precision error of %s using a=%s, b=%s, c=%s" % (x_naive_error, a, b, c))
-        raise NaiveError()
-    if x_herbie_error > ERROR_THRESHOLD:
-        print("Herbie precision error of %s using a=%s, b=%s, c=%s" % (x_herbie_error, a, b, c))
-        raise HerbieError()
+    # if x_naive_vs_precise_error > ERROR_THRESHOLD:
+    #     print("Difference between Naive and Precise precision error of %s using a=%s, b=%s, c=%s" % (x_naive_vs_precise_error, a, b, c))
+    #     with ExpectError():
+    #         raise NaiveVSPreciseError()
+    # if x_herbie_vs_precise_error > ERROR_THRESHOLD:
+    #     print("Difference between Herbie and Precise precision error of %s using a=%s, b=%s, c=%s" % (x_herbie_vs_precise_error, a, b, c))
+    #     with ExpectError():
+    #         raise HerbieVSPreciseError()
+    # if x_naive_vs_herbie_error > ERROR_THRESHOLD:
+    #     print("Difference between Naive and Herbie precision error of %s using a=%s, b=%s, c=%s" % (x_naive_vs_herbie_error, a, b, c))
+    #     with ExpectError():
+    #         raise NaiveVSHerbieError()
+
+    exceptions = []
+    if x_naive_vs_precise_error > ERROR_THRESHOLD:
+        print("Difference between Naive and Precise precision error of %s using a=%s, b=%s, c=%s" % (x_naive_vs_precise_error, a, b, c))
+        exceptions.append(NaiveVSPreciseError())    
+    if x_herbie_vs_precise_error > ERROR_THRESHOLD:
+        print("Difference between Herbie and Precise precision error of %s using a=%s, b=%s, c=%s" % (x_herbie_vs_precise_error, a, b, c))
+        exceptions.append(HerbieVSPreciseError())
+    if x_naive_vs_herbie_error > ERROR_THRESHOLD:
+        print("Difference between Naive and Herbie precision error of %s using a=%s, b=%s, c=%s" % (x_naive_vs_herbie_error, a, b, c))
+        exceptions.append(NaiveVSHerbieError())
+
+    if exceptions:
+        raise Exception([exceptions])
