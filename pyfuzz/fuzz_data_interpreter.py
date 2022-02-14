@@ -28,7 +28,6 @@ class FuzzedDataInterpreter(object):
         self.bytes_idx += num_bytes
         return out
 
-
     def claim_float(self):
         num_bytes = 4 # float always has 4 bytes
         struct_format = "f"
@@ -38,7 +37,6 @@ class FuzzedDataInterpreter(object):
         out = struct.unpack(struct_format, out_bytes)[0]
         self.bytes_idx += num_bytes
         return out
-
 
     def claim_double(self):
         num_bytes = 8 # double always has 8 bytes
@@ -58,3 +56,30 @@ class FuzzedDataInterpreter(object):
         max_val = 2 ** 32 # max unsigned int
         return int_val / max_val
 
+    def claim_float_in_range(self, min_val=0, max_val=100):
+        assert max_val > min_val, "max_val must be greater than min_val"
+        num_bytes = 4
+        delta = max_val - min_val
+        return delta * self.claim_probability()
+
+    def claim_int_in_range(self, min_val=0, max_val=100):
+        assert max_val > min_val, "max_val must be greater than min_val"
+        num_bytes = 4
+        return int(self.claim_float_in_range(min_val, max_val))
+
+
+if __name__ == '__main__':
+    
+    claims = [
+        'claim_int',
+        'claim_float', 
+        'claim_double',
+        'claim_probability',
+        'claim_float_in_range',
+        'claim_int_in_range'
+    ]
+
+    for claim in claims:
+        fdi = FuzzedDataInterpreter(b"\x01\x02\x03\x04\x05\x06\x07\x08")
+        out = getattr(fdi, claim)()
+        print(claim, out)
