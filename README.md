@@ -2,8 +2,17 @@
 
 A basic python-based fuzzing tool used to support miscellaneous research objectives.
 
-Run some examples:
-
+Install:
 ```
-(pyfuzz) Github\pyfuzz> python examples\titanic\pyfuzz_titanic.py
+pip install pyfuzz_tool
+```
+
+Import:
+```
+import pyfuzz
+```
+
+Run some examples:
+```
+(pyfuzz) Github\src\pyfuzz> python examples\titanic\pyfuzz_titanic.py
 ```
