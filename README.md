@@ -1,5 +1,7 @@
 # pyfuzz
 
+A basic python-based fuzzing tool used to support miscellaneous research objectives.
+
 Run some examples:
 
 ```
