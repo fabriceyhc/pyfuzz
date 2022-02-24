@@ -1,4 +1,5 @@
 import struct
+import random
 
 class FuzzedDataInterpreter(object):
     def __init__(self, 
