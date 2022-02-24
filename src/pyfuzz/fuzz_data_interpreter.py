@@ -59,16 +59,32 @@ class FuzzedDataInterpreter(object):
         max_val = 2 ** 32 # max unsigned int
         return int_val / max_val
 
+    # produces a undesirably skewed distribution due to non-uniformity of self.claim_probability()
+    # def claim_float_in_range(self, min_val=0, max_val=100):
+    #     assert max_val > min_val, "max_val must be greater than min_val"
+    #     num_bytes = 4
+    #     delta = max_val - min_val
+    #     return (delta * self.claim_probability()) - abs(min_val)
+
     def claim_float_in_range(self, min_val=0, max_val=100):
         assert max_val > min_val, "max_val must be greater than min_val"
         num_bytes = 4
+        if self.bytes_remaining() < num_bytes:
+            return 0.0
         delta = max_val - min_val
-        return (delta * self.claim_probability()) - abs(min_val)
+        out = (delta * random.uniform(0, 1)) - abs(min_val)
+        self.bytes_idx += num_bytes
+        return out
 
     def claim_int_in_range(self, min_val=0, max_val=100):
         assert max_val > min_val, "max_val must be greater than min_val"
         num_bytes = 4
-        return int(self.claim_float_in_range(min_val, max_val))
+        if self.bytes_remaining() < num_bytes:
+            return 0.0
+        delta = max_val - min_val
+        out = int((delta * random.uniform(0, 1)) - abs(min_val))
+        self.bytes_idx += num_bytes
+        return out
 
 
 if __name__ == '__main__':
