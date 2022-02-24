@@ -4,7 +4,7 @@ class FuzzedDataInterpreter(object):
     def __init__(self, 
                  data=b"\x01\x02\x03\x04\x05\x06\x07\x08", 
                  bytes_idx=0):
-    
+
         self.data = data
         self.bytes_idx = bytes_idx
 
@@ -63,7 +63,7 @@ class FuzzedDataInterpreter(object):
         assert max_val > min_val, "max_val must be greater than min_val"
         num_bytes = 4
         delta = max_val - min_val
-        return (delta * self.claim_probability()) - min_val
+        return (delta * self.claim_probability()) - abs(min_val)
 
     def claim_int_in_range(self, min_val=0, max_val=100):
         assert max_val > min_val, "max_val must be greater than min_val"
